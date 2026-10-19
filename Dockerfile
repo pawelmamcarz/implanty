@@ -1,0 +1,7 @@
+FROM caddy:2.10.2-alpine@sha256:4c6e91c6ed0e2fa03efd5b44747b625fec79bc9cd06ac5235a779726618e530d
+COPY --chmod=644 index.html script.js style.css /srv/
+COPY --chmod=644 Caddyfile /etc/caddy/Caddyfile
+RUN mkdir -p /config/caddy /data/caddy && chown -R 10001:10001 /config /data
+USER 10001:10001
+EXPOSE 8080
+CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
